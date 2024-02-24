@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExPzDi", "ExPzDi\ExPzDi.csproj", "{C04F911A-B6BB-4EE4-9346-5424E4CC6E09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzPzDi.Tests", "EzPzDi.Tests\EzPzDi.Tests.csproj", "{EA97916B-8A47-4223-9CA4-19FE574BB48F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C04F911A-B6BB-4EE4-9346-5424E4CC6E09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C04F911A-B6BB-4EE4-9346-5424E4CC6E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C04F911A-B6BB-4EE4-9346-5424E4CC6E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C04F911A-B6BB-4EE4-9346-5424E4CC6E09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA97916B-8A47-4223-9CA4-19FE574BB48F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA97916B-8A47-4223-9CA4-19FE574BB48F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA97916B-8A47-4223-9CA4-19FE574BB48F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA97916B-8A47-4223-9CA4-19FE574BB48F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BBC0417A-9F52-40F6-8DC3-C1CF584D2009}
+	EndGlobalSection
+EndGlobal
