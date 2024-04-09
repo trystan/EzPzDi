@@ -21,7 +21,7 @@ And wire it up in your service collection
 
 And that's it.
 
-## DI a concrete implementation
+## DI a concrete service type
 
 If your class doesn't implement any interfaces, then it's added to the service
 collection as itself.
@@ -40,7 +40,7 @@ Which is equivalent to
         .AddTransient<Example>();
 ```
 
-## DI abstract implementations
+## DI an unspecified implementations
 
 If your class implements one or more interfaces, then it's added to the service
 collection as an implementation of each one.
@@ -60,7 +60,7 @@ Which is equivalent to
         .AddTransient<IOtherExample, Example>();
 ```
 
-## DI specific implementations
+## DI a specified implementations
 
 If you don't want any of that, then you can specify the services you want to
 register and it won't be registered as the other interfaces.

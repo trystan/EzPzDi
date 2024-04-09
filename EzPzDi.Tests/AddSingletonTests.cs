@@ -1,19 +1,20 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Reflection.Metadata.Ecma335;
 
 namespace EzPzDi.Tests
 {
-    [AddTransient]
-    public class ExampleConcreteTransient { }
+    [AddSingleton]
+    public class ExampleConcreteSingleton { }
 
-    [AddTransient]
-    public class ExampleUnspecifiedTransient : IUnspecifiedInterface, IOtherInterface { }
+    [AddSingleton]
+    public class ExampleUnspecifiedSingleton : IUnspecifiedInterface, IOtherInterface { }
 
-    [AddTransient(ServiceTypes = new [] { typeof(IExplicitInterface) })]
-    public class ExampleSpecifiedTransient : IExplicitInterface, IOtherInterface { }
+    [AddSingleton(ServiceTypes = new [] { typeof(IExplicitInterface) })]
+    public class ExampleSpecifiedSingleton : IExplicitInterface, IOtherInterface { }
 
     [TestClass]
-    public class AddTransientTests
+    public class AddSingletonTests
     {
         [TestMethod]
         public void WithConcreteServiceTypes()
@@ -23,38 +24,42 @@ namespace EzPzDi.Tests
 
             var sp = sc.BuildServiceProvider();
             
-            Assert.IsNotNull(sp.GetService<ExampleConcreteTransient>());
+            Assert.IsNotNull(sp.GetService<ExampleConcreteSingleton>());
         }
 
         [TestMethod]
         public void WithUnspecifiedInterfaceServiceTypes()
         {
-            var implementationType = typeof(ExampleUnspecifiedTransient);
-            var name = nameof(ExampleUnspecifiedTransient);
-
-            var sc = new ServiceCollection()
-                .AddEzPzDi();
-
-            var sp = sc.BuildServiceProvider();
-
-            var found = sp.GetServices<IUnspecifiedInterface>().Where(c => c.GetType() == implementationType);
-            Assert.AreEqual(name, found.Single().GetType().Name);
-
-            var otherFound = sp.GetServices<IOtherInterface>().Where(c => c.GetType() == implementationType);
-            Assert.AreEqual(name, otherFound.Single().GetType().Name);
-        }
-
-        [TestMethod]
-        public void WithSpecifiedInterfaceServiceTypes()
-        {
-            var implementationType = typeof(ExampleSpecifiedTransient);
-            var name = nameof(ExampleSpecifiedTransient);
+            var implementationType = typeof(ExampleUnspecifiedSingleton);
 
             var sc = new ServiceCollection()
                 .AddEzPzDi();
 
             var actual = sc.Where(s => s.ImplementationType == implementationType
-                && s.Lifetime == ServiceLifetime.Transient);
+                && s.Lifetime == ServiceLifetime.Singleton);
+            Assert.AreEqual(2, actual.Count());
+
+            var sp = sc.BuildServiceProvider();
+
+            var found = sp.GetServices<IUnspecifiedInterface>().Where(c => c.GetType() == implementationType);
+            Assert.AreEqual(nameof(ExampleUnspecifiedSingleton), found.Single().GetType().Name);
+
+            var otherFound = sp.GetServices<IOtherInterface>().Where(c => c.GetType() == implementationType);
+            Assert.AreEqual(nameof(ExampleUnspecifiedSingleton), otherFound.Single().GetType().Name);
+        }
+
+        [TestMethod]
+        public void WithSpecifiedInterfaceServiceTypes()
+        {
+            var implementationType = typeof(ExampleSpecifiedSingleton);
+            var name = nameof(ExampleSpecifiedSingleton);
+
+
+            var sc = new ServiceCollection()
+                .AddEzPzDi();
+
+            var actual = sc.Where(s => s.ImplementationType == implementationType
+                && s.Lifetime == ServiceLifetime.Singleton);
             Assert.AreEqual(1, actual.Count());
 
             var sp = sc.BuildServiceProvider();
