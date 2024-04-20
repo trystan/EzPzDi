@@ -8,61 +8,46 @@ public static class EzPzDi
     public static IServiceCollection AddEzPzDi(this IServiceCollection services)
     {
         var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes());
+
         foreach (var implementationType in types)
         {
-            AddEzPzTransients(services, implementationType);
-            AddEzPzSingletons(services, implementationType);
+            if (implementationType.GetCustomAttribute(typeof(AddTransientAttribute)) is AddTransientAttribute transient)
+            {
+                Add(services, transient.ServiceTypes, implementationType, ServiceLifetime.Transient);
+            }
+
+            if (implementationType.GetCustomAttribute(typeof(AddSingletonAttribute)) is AddSingletonAttribute singleton)
+            {
+                Add(services, singleton.ServiceTypes, implementationType, ServiceLifetime.Singleton);
+            }
+
+            if (implementationType.GetCustomAttribute(typeof(AddScopedAttribute)) is AddScopedAttribute scoped)
+            {
+                Add(services, scoped.ServiceTypes, implementationType, ServiceLifetime.Scoped);
+            }
         }
         return services;
     }
 
-    private static void AddEzPzTransients(IServiceCollection services, Type implementationType)
+    private static void Add(IServiceCollection services, Type[] serviceTypes, Type implementationType, ServiceLifetime lifetime)
     {
-        if (implementationType.GetCustomAttribute(typeof(AddTransientAttribute)) is AddTransientAttribute transient)
+        if (serviceTypes.Any())
         {
-            if (transient.ServiceTypes.Any())
+            foreach (var serviceType in serviceTypes)
             {
-                foreach (var serviceType in transient.ServiceTypes)
-                {
-                    services.AddTransient(serviceType, implementationType);
-                }
-            }
-            else if (implementationType.GetInterfaces().Any())
-            {
-                foreach (var serviceType in implementationType.GetInterfaces())
-                {
-                    services.AddTransient(serviceType, implementationType);
-                }
-            }
-            else
-            {
-                services.AddTransient(implementationType);
+                services.Add(new ServiceDescriptor(serviceType, implementationType, lifetime));
             }
         }
-    }
-
-    private static void AddEzPzSingletons(IServiceCollection services, Type implementationType)
-    {
-        if (implementationType.GetCustomAttribute(typeof(AddSingletonAttribute)) is AddSingletonAttribute transient)
+        else if (implementationType.GetInterfaces().Any())
         {
-            if (transient.ServiceTypes.Any())
+            foreach (var serviceType in implementationType.GetInterfaces())
             {
-                foreach (var serviceType in transient.ServiceTypes)
-                {
-                    services.AddSingleton(serviceType, implementationType);
-                }
+                services.Add(new ServiceDescriptor(serviceType, implementationType, lifetime));
             }
-            else if (implementationType.GetInterfaces().Any())
-            {
-                foreach (var serviceType in implementationType.GetInterfaces())
-                {
-                    services.AddSingleton(serviceType, implementationType);
-                }
-            }
-            else
-            {
-                services.AddSingleton(implementationType);
-            }
+        }
+        else
+        {
+            services.Add(new ServiceDescriptor(implementationType, implementationType, lifetime));
         }
     }
 }
