@@ -13,10 +13,10 @@ namespace EzPzDi.Tests
     public class ExampleSpecifiedScoped : IExplicitInterface, IOtherInterface { }
 
     [TestClass]
-    public class AddScopedTests
+    public class AddScopedAttributeTests
     {
         [TestMethod]
-        public void WithConcreteServiceTypes()
+        public void ShouldRegisterConcreteServiceTypes()
         {
             var implementationType = typeof(ExampleConcreteScoped);
 
@@ -31,7 +31,7 @@ namespace EzPzDi.Tests
         }
 
         [TestMethod]
-        public void WithUnspecifiedInterfaceServiceTypes()
+        public void ShouldRegisterUnspecifiedInterfaceServiceTypes()
         {
             var implementationType = typeof(ExampleUnspecifiedScoped);
 
@@ -52,7 +52,7 @@ namespace EzPzDi.Tests
         }
 
         [TestMethod]
-        public void WithSpecifiedInterfaceServiceTypes()
+        public void ShouldRegisterSpecifiedInterfaceServiceTypes()
         {
             var implementationType = typeof(ExampleSpecifiedScoped);
             var name = nameof(ExampleSpecifiedScoped);

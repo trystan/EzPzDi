@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace EzPzDi.Tests
 {
     [TestClass]
-    public class AddEzPzDi
+    public class AddEzPzDiServiceCollectionExtensionTests
     {
         [TestMethod]
-        public void WithSpecificAssembly()
+        public void CabBeConfiguredToLoadFromSpecificAssembly()
         {
             var assemblyA = typeof(AssemblyA.Implementation).Assembly;
             
@@ -25,7 +25,7 @@ namespace EzPzDi.Tests
         }
 
         [TestMethod]
-        public void WithSpecificAssemblies()
+        public void CabBeConfiguredToLoadFromSpecificAssemblies()
         {
             var assemblyA = typeof(AssemblyA.Implementation).Assembly;
             var assemblyB = typeof(AssemblyB.Implementation).Assembly;
@@ -45,7 +45,7 @@ namespace EzPzDi.Tests
         }
 
         [TestMethod]
-        public void WithEmptyListOfAssemblies()
+        public void CabBeConfiguredToLoadFromEmptyListOfAssemblies()
         {
             var assemblyA = typeof(AssemblyA.Implementation).Assembly;
             var assemblyB = typeof(AssemblyB.Implementation).Assembly;
@@ -63,7 +63,7 @@ namespace EzPzDi.Tests
         }
 
         [TestMethod]
-        public void ByDefault()
+        public void ShouldLoadFromAllAssembliesByDefault()
         {
             // ensure all test assemblies have been loaded
             var assemblies = new[] { typeof(AssemblyA.Implementation).Assembly, typeof(AssemblyB.Implementation).Assembly };

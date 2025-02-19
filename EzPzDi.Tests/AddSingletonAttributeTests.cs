@@ -13,10 +13,10 @@ namespace EzPzDi.Tests
     public class ExampleSpecifiedSingleton : IExplicitInterface, IOtherInterface { }
 
     [TestClass]
-    public class AddSingletonTests
+    public class AddSingletonAttributeTests
     {
         [TestMethod]
-        public void WithConcreteServiceTypes()
+        public void ShouldRegisterConcreteServiceTypes()
         {
             var sc = new ServiceCollection()
                 .AddEzPzDi();
@@ -27,7 +27,7 @@ namespace EzPzDi.Tests
         }
 
         [TestMethod]
-        public void WithUnspecifiedInterfaceServiceTypes()
+        public void ShouldRegisterUnspecifiedInterfaceServiceTypes()
         {
             var implementationType = typeof(ExampleUnspecifiedSingleton);
 
@@ -48,7 +48,7 @@ namespace EzPzDi.Tests
         }
 
         [TestMethod]
-        public void WithSpecifiedInterfaceServiceTypes()
+        public void ShouldRegisterSpecifiedInterfaceServiceTypes()
         {
             var implementationType = typeof(ExampleSpecifiedSingleton);
             var name = nameof(ExampleSpecifiedSingleton);
