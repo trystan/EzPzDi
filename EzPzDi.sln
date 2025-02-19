@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExPzDi", "ExPzDi\ExPzDi.csproj", "{C04F911A-B6BB-4EE4-9346-5424E4CC6E09}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EzPzDi.Tests", "EzPzDi.Tests\EzPzDi.Tests.csproj", "{EA97916B-8A47-4223-9CA4-19FE574BB48F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzPzDi.Tests.AssemblyA", "EzPzDi.Tests.AssemblyA\EzPzDi.Tests.AssemblyA.csproj", "{854DA110-29CC-43CA-9CED-E5480A62CBF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EzPzDi.Tests.AssemblyA", "EzPzDi.Tests.AssemblyA\EzPzDi.Tests.AssemblyA.csproj", "{854DA110-29CC-43CA-9CED-E5480A62CBF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzPzDi.Tests.Types", "EzPzDi.Tests.Types\EzPzDi.Tests.Types.csproj", "{E57634ED-E4C1-4184-BE56-F1D642545D59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EzPzDi.Tests.Types", "EzPzDi.Tests.Types\EzPzDi.Tests.Types.csproj", "{E57634ED-E4C1-4184-BE56-F1D642545D59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EzPzDi.Tests.AssemblyB", "EzPzDi.Tests.AssemblyB\EzPzDi.Tests.AssemblyB.csproj", "{86F22873-E394-44C8-98BB-7B9E1E5A7C10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EzPzDi.Tests.AssemblyB", "EzPzDi.Tests.AssemblyB\EzPzDi.Tests.AssemblyB.csproj", "{86F22873-E394-44C8-98BB-7B9E1E5A7C10}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EzPzDi", "EzPzDi\EzPzDi.csproj", "{680D61A0-CC42-4A40-9ACB-BA44C2C79ED4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C04F911A-B6BB-4EE4-9346-5424E4CC6E09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C04F911A-B6BB-4EE4-9346-5424E4CC6E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C04F911A-B6BB-4EE4-9346-5424E4CC6E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C04F911A-B6BB-4EE4-9346-5424E4CC6E09}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EA97916B-8A47-4223-9CA4-19FE574BB48F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EA97916B-8A47-4223-9CA4-19FE574BB48F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA97916B-8A47-4223-9CA4-19FE574BB48F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{86F22873-E394-44C8-98BB-7B9E1E5A7C10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86F22873-E394-44C8-98BB-7B9E1E5A7C10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86F22873-E394-44C8-98BB-7B9E1E5A7C10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{680D61A0-CC42-4A40-9ACB-BA44C2C79ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{680D61A0-CC42-4A40-9ACB-BA44C2C79ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{680D61A0-CC42-4A40-9ACB-BA44C2C79ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{680D61A0-CC42-4A40-9ACB-BA44C2C79ED4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

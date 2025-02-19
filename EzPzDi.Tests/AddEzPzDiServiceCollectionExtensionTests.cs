@@ -7,7 +7,7 @@ namespace EzPzDi.Tests
     public class AddEzPzDiServiceCollectionExtensionTests
     {
         [TestMethod]
-        public void CabBeConfiguredToLoadFromSpecificAssembly()
+        public void CanBeConfiguredToLoadFromSpecificAssembly()
         {
             var assemblyA = typeof(AssemblyA.Implementation).Assembly;
             
@@ -25,7 +25,7 @@ namespace EzPzDi.Tests
         }
 
         [TestMethod]
-        public void CabBeConfiguredToLoadFromSpecificAssemblies()
+        public void CanBeConfiguredToLoadFromSpecificAssemblies()
         {
             var assemblyA = typeof(AssemblyA.Implementation).Assembly;
             var assemblyB = typeof(AssemblyB.Implementation).Assembly;
@@ -45,7 +45,7 @@ namespace EzPzDi.Tests
         }
 
         [TestMethod]
-        public void CabBeConfiguredToLoadFromEmptyListOfAssemblies()
+        public void CanBeConfiguredToLoadFromEmptyListOfAssemblies()
         {
             var assemblyA = typeof(AssemblyA.Implementation).Assembly;
             var assemblyB = typeof(AssemblyB.Implementation).Assembly;

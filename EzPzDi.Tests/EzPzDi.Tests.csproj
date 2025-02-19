@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExPzDi\ExPzDi.csproj" />
+    <ProjectReference Include="..\EzPzDi\EzPzDi.csproj" />
     <ProjectReference Include="..\EzPzDi.Tests.AssemblyA\EzPzDi.Tests.AssemblyA.csproj" />
     <ProjectReference Include="..\EzPzDi.Tests.AssemblyB\EzPzDi.Tests.AssemblyB.csproj" />
   </ItemGroup>
