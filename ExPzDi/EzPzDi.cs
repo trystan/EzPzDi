@@ -3,11 +3,29 @@ using System.Reflection;
 
 namespace EzPzDi;
 
+public class EzPzDiConfig
+{
+    public IEnumerable<Assembly> FromAssemblies { get; set; }
+
+    public EzPzDiConfig()
+    {
+        FromAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+    }
+}
+
 public static class EzPzDi
 {
     public static IServiceCollection AddEzPzDi(this IServiceCollection services)
     {
-        var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes());
+        return AddEzPzDi(services, c => { });
+    }
+
+    public static IServiceCollection AddEzPzDi(this IServiceCollection services, Action<EzPzDiConfig> config)
+    {
+        var configuration = new EzPzDiConfig();
+        config(configuration);
+
+        var types = configuration.FromAssemblies.SelectMany(a => a.GetTypes());
 
         foreach (var implementationType in types)
         {
