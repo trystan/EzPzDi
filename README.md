@@ -21,7 +21,7 @@ And wire it up in your service collection
 
 And that's it.
 
-## DI a concrete service type
+## Register as a concrete type
 
 If your class doesn't implement any interfaces, then it's added to the service
 collection as itself.
@@ -40,7 +40,7 @@ Which is equivalent to
         .AddTransient<Example>();
 ```
 
-## DI an unspecified implementations
+## Register as all service types
 
 If your class implements one or more interfaces, then it's added to the service
 collection as an implementation of each one.
@@ -60,10 +60,10 @@ Which is equivalent to
         .AddTransient<IOtherExample, Example>();
 ```
 
-## DI a specified implementations
+## Register as explicit service types
 
-If you don't want any of that, then you can specify the services you want to
-register and it won't be registered as the other interfaces.
+You can also specify the services you want to register and it won't be
+registered as the other interfaces.
 
 ```csharp
 [AddTransient(ServiceClasses = Type[]{ IOtherExample })]
@@ -78,3 +78,40 @@ Which, because this is the only specified servce type, is equivalent to
     var sc = new ServiceCollection()
         .AddTransient<IOtherExample, Example>();
 ```
+
+## Only scan specific assemblies
+
+If you have multiple entrypoints and multiple DI containers, then you may
+only want to load the relevent services. If so, then just specify those
+assemblies.
+
+You can have this in your Lambda project:
+
+```csharp
+    var sc = new ServiceCollection()
+        .AddEzPzDi(c =>
+        {
+            c.FromAssemblies = new[]
+            { 
+                Assembly.GetAssembly(typeof(SomCommonType)),
+                Assembly.GetAssembly(typeof(LambdaEntrypoint))
+            };
+        });
+```
+
+And have this in your Rest API project:
+
+```csharp
+    var sc = new ServiceCollection()
+        .AddEzPzDi(c =>
+        {
+            c.FromAssemblies = new[]
+            { 
+                Assembly.GetAssembly(typeof(SomCommonType)),
+                Assembly.GetAssembly(typeof(Setup))
+            };
+        });
+```
+
+By default, EzPzDi will scan every assembly that has been loaded. You may need
+to reference a type from an assembly to ensure it's loaded.
