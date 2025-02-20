@@ -20,11 +20,17 @@ public static class EzPzDi
         return AddEzPzDi(services, c => { });
     }
 
-    public static IServiceCollection AddEzPzDi(this IServiceCollection services, Action<EzPzDiConfig> config)
+    public static IServiceCollection AddEzPzDi(this IServiceCollection services, Action<EzPzDiConfig> setupAction)
     {
         var configuration = new EzPzDiConfig();
-        config(configuration);
 
+        setupAction(configuration);
+
+        return AddEzPzDi(services, configuration);
+    }
+
+    public static IServiceCollection AddEzPzDi(this IServiceCollection services, EzPzDiConfig configuration)
+    {
         var types = configuration.FromAssemblies.SelectMany(a => a.GetTypes());
 
         foreach (var implementationType in types)

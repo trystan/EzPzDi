@@ -15,11 +15,11 @@ public class Example
 And wire it up in your service collection
 
 ```csharp
-    var sc = new ServiceCollection()
-        .AddEzPzDi();
+var sc = new ServiceCollection()
+    .AddEzPzDi();
 ```
 
-And that's it.
+And that's it. `[AddScoped]` and `[AddSingleton]` are also supported.
 
 ## Register as a concrete type
 
@@ -36,8 +36,8 @@ public class Example
 Which is equivalent to
 
 ```csharp
-    var sc = new ServiceCollection()
-        .AddTransient<Example>();
+var sc = new ServiceCollection()
+    .AddTransient<Example>();
 ```
 
 ## Register as all service types
@@ -55,9 +55,9 @@ public class Example : IExample, IOtherExample
 Which is equivalent to
 
 ```csharp
-    var sc = new ServiceCollection()
-        .AddTransient<IExample, Example>()
-        .AddTransient<IOtherExample, Example>();
+var sc = new ServiceCollection()
+    .AddTransient<IExample, Example>()
+    .AddTransient<IOtherExample, Example>();
 ```
 
 ## Register as explicit service types
@@ -75,43 +75,48 @@ public class Example : IExample, IOtherExample
 Which, because this is the only specified servce type, is equivalent to
 
 ```csharp
-    var sc = new ServiceCollection()
-        .AddTransient<IOtherExample, Example>();
+var sc = new ServiceCollection()
+    .AddTransient<IOtherExample, Example>();
 ```
 
 ## Only scan specific assemblies
 
 If you have multiple entrypoints and multiple DI containers, then you may
-only want to load the relevent services. If so, then just specify those
+only want to load the relevant services. If so, then just specify those
 assemblies.
 
 You can have this in your Lambda project:
 
 ```csharp
-    var sc = new ServiceCollection()
-        .AddEzPzDi(c =>
-        {
-            c.FromAssemblies = new[]
-            { 
-                Assembly.GetAssembly(typeof(SomCommonType)),
-                Assembly.GetAssembly(typeof(LambdaEntrypoint))
-            };
-        });
+var sc = new ServiceCollection()
+    .AddEzPzDi(c =>
+    {
+        c.FromAssemblies = new[]
+        { 
+            Assembly.GetAssembly(typeof(SomeCommonType)),
+            Assembly.GetAssembly(typeof(LambdaEntryPoint))
+        };
+    });
 ```
 
 And have this in your Rest API project:
 
 ```csharp
-    var sc = new ServiceCollection()
-        .AddEzPzDi(c =>
-        {
-            c.FromAssemblies = new[]
-            { 
-                Assembly.GetAssembly(typeof(SomCommonType)),
-                Assembly.GetAssembly(typeof(Setup))
-            };
-        });
+var sc = new ServiceCollection()
+    .AddEzPzDi(c =>
+    {
+        c.FromAssemblies = new[]
+        { 
+            Assembly.GetAssembly(typeof(SomeCommonType)),
+            Assembly.GetAssembly(typeof(Setup))
+        };
+    });
 ```
 
 By default, EzPzDi will scan every assembly that has been loaded. You may need
 to reference a type from an assembly to ensure it's loaded.
+
+# TODO
+
+* Support implementation factories: `.AddSingleton(sp => ...)`
+* Maybe a simple linter? Eg, warn if a Singleton depends on a Transient.
