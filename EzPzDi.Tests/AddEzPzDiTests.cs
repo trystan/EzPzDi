@@ -25,7 +25,27 @@ namespace EzPzDi.Tests
         }
 
         [TestMethod]
-        public void CanBeConfiguredToLoadFromSpecificAssembly()
+        public void CanFilterTypes()
+        {
+            var assemblyA = typeof(AssemblyA.Implementation).Assembly;
+            var assemblyB = typeof(AssemblyB.Implementation).Assembly;
+
+            var sp = new ServiceCollection()
+                .AddEzPzDi(c =>
+                {
+                    c.FromAssemblies = new[] { assemblyA, assemblyB };
+                    c.TypeFilter = (Type type) => { return type.Namespace == "EzPzDi.Tests.AssemblyA"; };
+                })
+                .BuildServiceProvider();
+
+            var found = sp.GetServices<IUnspecifiedInterface>().ToArray();
+
+            Assert.AreEqual(1, found.Length);
+            Assert.AreEqual("EzPzDi.Tests.AssemblyA.Implementation", found[0].GetType().FullName);
+        }
+
+        [TestMethod]
+        public void CanLoadFromSpecificAssembly()
         {
             var assemblyA = typeof(AssemblyA.Implementation).Assembly;
             
@@ -43,7 +63,7 @@ namespace EzPzDi.Tests
         }
 
         [TestMethod]
-        public void CanBeConfiguredToLoadFromSpecificAssemblies()
+        public void CanLoadFromSpecificAssemblies()
         {
             var assemblyA = typeof(AssemblyA.Implementation).Assembly;
             var assemblyB = typeof(AssemblyB.Implementation).Assembly;
@@ -63,7 +83,7 @@ namespace EzPzDi.Tests
         }
 
         [TestMethod]
-        public void CanBeConfiguredToLoadFromEmptyListOfAssemblies()
+        public void CanLoadFromEmptyListOfAssemblies()
         {
             var assemblyA = typeof(AssemblyA.Implementation).Assembly;
             var assemblyB = typeof(AssemblyB.Implementation).Assembly;

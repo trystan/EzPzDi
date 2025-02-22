@@ -6,6 +6,7 @@ namespace EzPzDi;
 public class EzPzDiConfig
 {
     public IEnumerable<Assembly> FromAssemblies { get; set; }
+    public Func<Type, bool> TypeFilter { get; set; }
 
     public EzPzDiConfig()
     {
@@ -31,25 +32,40 @@ public static class EzPzDi
 
     public static IServiceCollection AddEzPzDi(this IServiceCollection services, EzPzDiConfig configuration)
     {
-        var types = configuration.FromAssemblies.SelectMany(a => a.GetTypes()).Distinct();
+        static bool KeepAll(Type type) { return true; }
+
+        var typeFilter = configuration.TypeFilter ?? KeepAll;
+
+        var types = configuration.FromAssemblies
+            .SelectMany(a => a.GetTypes())
+            .Distinct();
 
         foreach (var implementationType in types)
         {
             if (implementationType.GetCustomAttribute(typeof(AddTransientAttribute)) is AddTransientAttribute transient)
             {
-                Add(services, transient.ServiceTypes, implementationType, ServiceLifetime.Transient);
+                if (typeFilter(implementationType)) {
+                    Add(services, transient.ServiceTypes, implementationType, ServiceLifetime.Transient);
+                }
             }
 
             if (implementationType.GetCustomAttribute(typeof(AddSingletonAttribute)) is AddSingletonAttribute singleton)
             {
-                Add(services, singleton.ServiceTypes, implementationType, ServiceLifetime.Singleton);
+                if (typeFilter(implementationType))
+                {
+                    Add(services, singleton.ServiceTypes, implementationType, ServiceLifetime.Singleton);
+                }
             }
 
             if (implementationType.GetCustomAttribute(typeof(AddScopedAttribute)) is AddScopedAttribute scoped)
             {
-                Add(services, scoped.ServiceTypes, implementationType, ServiceLifetime.Scoped);
+                if (typeFilter(implementationType))
+                {
+                    Add(services, scoped.ServiceTypes, implementationType, ServiceLifetime.Scoped);
+                }
             }
         }
+
         return services;
     }
 
