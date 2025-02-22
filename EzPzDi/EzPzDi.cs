@@ -31,7 +31,7 @@ public static class EzPzDi
 
     public static IServiceCollection AddEzPzDi(this IServiceCollection services, EzPzDiConfig configuration)
     {
-        var types = configuration.FromAssemblies.SelectMany(a => a.GetTypes());
+        var types = configuration.FromAssemblies.SelectMany(a => a.GetTypes()).Distinct();
 
         foreach (var implementationType in types)
         {

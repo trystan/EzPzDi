@@ -4,8 +4,26 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace EzPzDi.Tests
 {
     [TestClass]
-    public class AddEzPzDiServiceCollectionExtensionTests
+    public class AddEzPzDiTests
     {
+        [TestMethod]
+        public void DoesNotAddTheSameTypeTwice()
+        {
+            var assemblyA = typeof(AssemblyA.Implementation).Assembly;
+
+            var sp = new ServiceCollection()
+                .AddEzPzDi(c =>
+                {
+                    c.FromAssemblies = new[] { assemblyA, assemblyA };
+                })
+                .BuildServiceProvider();
+
+            var found = sp.GetServices<IUnspecifiedInterface>().ToArray();
+
+            Assert.AreEqual(1, found.Length);
+            Assert.AreEqual("EzPzDi.Tests.AssemblyA.Implementation", found[0].GetType().FullName);
+        }
+
         [TestMethod]
         public void CanBeConfiguredToLoadFromSpecificAssembly()
         {
