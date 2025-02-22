@@ -85,7 +85,7 @@ If you have multiple entrypoints and multiple DI containers, then you may
 only want to load the relevant services. If so, then just specify those
 assemblies.
 
-You can have this in your Lambda project:
+You can have this in your LambdaHost project:
 
 ```csharp
 var sc = new ServiceCollection()
@@ -93,13 +93,13 @@ var sc = new ServiceCollection()
     {
         c.FromAssemblies = new[]
         { 
-            Assembly.GetAssembly(typeof(SomeCommonType)),
-            Assembly.GetAssembly(typeof(LambdaEntryPoint))
+            Assembly.Load("MyCompany.MyProject.Common"),
+            Assembly.Load("MyCompany.MyProject.LambdaHost")
         };
     });
 ```
 
-And have this in your Rest API project:
+And have this in your WebApi project:
 
 ```csharp
 var sc = new ServiceCollection()
@@ -107,14 +107,26 @@ var sc = new ServiceCollection()
     {
         c.FromAssemblies = new[]
         { 
-            Assembly.GetAssembly(typeof(SomeCommonType)),
-            Assembly.GetAssembly(typeof(Setup))
+            Assembly.Load("MyCompany.MyProject.Common"),
+            Assembly.Load("MyCompany.MyProject.WebApi")
         };
     });
 ```
 
 By default, EzPzDi will scan every assembly that has been loaded. You may need
 to reference a type from an assembly to ensure it's loaded.
+
+## Filter types before they're registered
+
+You can also do custom filtering of each type to determine what gets registered:
+
+```csharp
+var sc = new ServiceCollection()
+    .AddEzPzDi(c =>
+    {
+        c.TypeFilter = (Type type) => { return !type.Name.Contains("Local"); };
+    });
+```
 
 # TODO
 
