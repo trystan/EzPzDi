@@ -12,6 +12,14 @@ namespace EzPzDi.Tests
     [AddScoped(ServiceTypes = new [] { typeof(IExplicitInterface) })]
     public class ExampleSpecifiedScoped : IExplicitInterface, IOtherInterface { }
 
+    public class ExampleScopedFactoryMethod : IAnotherInterface { }
+
+    [AddScoped(StaticFactoryMethod = nameof(Test))]
+    public class ExampleScopedFactoryMethodFactory
+    {
+        public static IAnotherInterface Test(IServiceProvider serviceProvider) { return new ExampleScopedFactoryMethod(); }
+    }
+
     [TestClass]
     public class AddScopedAttributeTests
     {
@@ -70,9 +78,23 @@ namespace EzPzDi.Tests
             Assert.AreEqual(name, found.GetType().Name);
 
             // IOtherInterface wasn't specifed in the attribute but
-            // another was, so it shoudln't show up.
+            // another was, so it shouldn't show up.
             var otherFound = sp.GetServices<IOtherInterface>().Where(c => c.GetType() == implementationType);
             Assert.AreEqual(0, otherFound.Count());
+        }
+
+        [TestMethod]
+        public void ShouldRegisterFactory()
+        {
+            var implementationType = typeof(ExampleScopedFactoryMethod);
+
+            var sc = new ServiceCollection()
+                .AddEzPzDi();
+
+            var sp = sc.BuildServiceProvider();
+
+            var found = sp.GetServices<IAnotherInterface>().Single(c => c.GetType() == implementationType);
+            Assert.AreEqual(nameof(ExampleScopedFactoryMethod), found.GetType().Name);
         }
     }
 }

@@ -79,6 +79,29 @@ var sc = new ServiceCollection()
     .AddTransient<IOtherExample, Example>();
 ```
 
+## Register a factory
+
+You can also specify a static factory method. If specified, then this is the
+only thing that will get registered.
+
+```csharp
+[AddScoped(StaticFactoryMethod = nameof(Factory))]
+public class ReportServiceFactory
+{
+    public static IReportService Factory(IServiceProvider serviceProvider)
+    {
+        return new ReportService();
+    }
+}
+```
+
+Which is equivalent to
+
+```csharp
+var sc = new ServiceCollection()
+    .AddScoped<IReportService>(ReportServiceFactory.Factory);
+```
+
 ## Only scan specific assemblies
 
 If you have multiple entrypoints and multiple DI containers, then you may
@@ -118,17 +141,16 @@ to reference a type from an assembly to ensure it's loaded.
 
 ## Filter types before they're registered
 
-You can also do custom filtering of each type to determine what gets registered:
+For the rare cases when you need it, you can also do custom filtering of each
+type to determine what gets registered.
 
 ```csharp
 var sc = new ServiceCollection()
     .AddEzPzDi(c =>
     {
-        c.TypeFilter = (Type type) => { return !type.Name.Contains("Local"); };
+        c.TypeFilter = (Type type) =>
+        {
+            return !type.Name.Contains("Local");
+        };
     });
 ```
-
-# TODO
-
-* Support implementation factories: `.AddSingleton(sp => ...)`
-* Maybe a simple linter? Eg, warn if a Singleton depends on a Transient.

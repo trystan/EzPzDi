@@ -7,4 +7,5 @@
     public interface IExplicitInterface { }
 
     public interface IOtherInterface { }
+    public interface IAnotherInterface { }
 }

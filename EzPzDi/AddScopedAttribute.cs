@@ -4,6 +4,7 @@
 public class AddScopedAttribute : Attribute
 {
     public Type[] ServiceTypes { get; init; }
+    public string? StaticFactoryMethod { get; set; }
 
     public AddScopedAttribute()
     {

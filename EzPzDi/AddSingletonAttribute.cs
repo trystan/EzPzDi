@@ -4,6 +4,7 @@
 public class AddSingletonAttribute : Attribute
 {
     public Type[] ServiceTypes { get; init; }
+    public string? StaticFactoryMethod { get; set; }
 
     public AddSingletonAttribute()
     {
